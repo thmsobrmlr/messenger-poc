@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import localtunnel from 'localtunnel';
 import chalk from 'chalk';
 
