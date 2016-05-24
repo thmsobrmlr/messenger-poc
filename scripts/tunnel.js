@@ -1,19 +1,23 @@
-var localtunnel = require('localtunnel');
-var chalk = require('chalk');
+/* eslint-disable no-console */
+import localtunnel from 'localtunnel';
+import chalk from 'chalk';
 
-var subdomain = process.env.SUBDOMAIN;
-var port = process.env.PORT || 3000;
+const subdomain = process.env.SUBDOMAIN;
+const port = process.env.PORT || 3000;
 
-var opts = {};
+const opts = {};
 
 if (subdomain) {
   opts.subdomain = subdomain;
 }
 
-localtunnel(port, opts, function (err, tunnel) {
+localtunnel(port, opts, (err, tunnel) => {
   if (err) {
     console.log(chalk.red.bold(err));
   } else {
-    console.log('Tunnel open from ' + chalk.green.bold(tunnel.url) + ' to ' + chalk.green.bold('http://localhost:' + port) + '.');
+    const sourceUrl = chalk.green.bold(tunnel.url);
+    const destUrl = chalk.green.bold(`http://localhost:${port}`);
+
+    console.log(`Tunnel open from ${sourceUrl} to ${destUrl}.`);
   }
 });
