@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint source",
     "clean": "rm -rf build/* && mkdir build",
-    "build": "babel source -d build"
+    "build": "babel source -d build",
+    "tunnel": "node scripts/tunnel.js"
   },
   "author": "Thomas Obermüller",
   "license": "UNLICENSED",
@@ -17,11 +18,13 @@
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.8.0",
     "eslint-plugin-jsx-a11y": "^1.2.2",
-    "eslint-plugin-react": "^5.1.1"
+    "eslint-plugin-react": "^5.1.1",
+    "localtunnel": "^1.8.1"
   },
   "dependencies": {
     "chalk": "^1.1.3",
     "dotenv": "^2.0.0",
     "express": "^4.13.4"
-  }
+  },
+  "private": true
 }
