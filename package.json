@@ -4,6 +4,7 @@
   "main": "build/index.js",
   "scripts": {
     "lint": "eslint source",
+    "start": "babel-watch source/index.js",
     "clean": "rm -rf build/* && mkdir build",
     "build": "babel source -d build",
     "tunnel": "node scripts/tunnel.js"
@@ -14,6 +15,7 @@
     "babel-cli": "^6.9.0",
     "babel-eslint": "^6.0.4",
     "babel-preset-es2015": "^6.9.0",
+    "babel-watch": "^2.0.2",
     "eslint": "^2.10.2",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.8.0",
