@@ -4,9 +4,11 @@
   "main": "build/index.js",
   "scripts": {
     "lint": "eslint source",
-    "start": "babel-watch source/index.js",
+    "dev": "babel-watch source/index.js",
     "clean": "rm -rf build/* && mkdir build",
     "build": "babel source -d build",
+    "start": "node build/index.js",
+    "debug": "node --debug build/index.js",
     "tunnel": "babel-node scripts/tunnel.js"
   },
   "author": "Thomas Obermüller",
