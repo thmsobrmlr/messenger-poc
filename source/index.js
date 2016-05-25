@@ -17,8 +17,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+// static files
+app.use(express.static(`${__dirname}/../public/`));
+
+const server = app.listen(port, () => {
+  console.log(chalk.green.bold(`App is listening on port ${port}!`));
+});
+
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+
 app.get('/', (req, res) => {
-  res.send('Hello world!');
+  res.sendfile('index.html');
 });
 
 // webhook verification
@@ -39,6 +57,8 @@ app.post('/webhook/', (req, res) => {
     if (event.message && event.message.text) {
       const text = event.message.text;
 
+      io.emit('new_message', { event });
+
       switch (text) {
         case 'image': {
           messenger.sendImage(pageAccessToken, senderId, 'http://placekitten.com/200/300');
@@ -55,14 +75,11 @@ app.post('/webhook/', (req, res) => {
         default: {
           const reply = `Text received, echo: ${text.substring(0, 200)}`;
           messenger.sendTextMessage(pageAccessToken, senderId, reply);
+          io.emit('new_message', { reply });
         }
       }
     }
   }
 
   res.sendStatus(200);
-});
-
-app.listen(port, () => {
-  console.log(chalk.green.bold(`App is listening on port ${port}!`));
 });
