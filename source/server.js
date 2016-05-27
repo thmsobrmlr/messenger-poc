@@ -1,15 +1,16 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
 import chalk from 'chalk';
+import socketIo from 'socket.io';
 
 import messenger from './messenger';
-
-dotenv.config();
-const port = process.env.APP_PORT || 3000;
-const pageAccessToken = process.env.FB_PAGE_ACCESS_TOKEN;
+import { appPort, pageAccessToken } from './config';
 
 const app = express();
+const server = app.listen(appPort, () => {
+  console.log(chalk.green.bold(`App is listening on port ${appPort}!`));
+});
+const io = socketIo(server);
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,20 +21,9 @@ app.use(bodyParser.json());
 // static files
 app.use(express.static(`${__dirname}/../public/`));
 
-const server = app.listen(port, () => {
-  console.log(chalk.green.bold(`App is listening on port ${port}!`));
+app.get('/client.bundle.js', (req, res) => {
+  res.sendfile(`${__dirname}/client.bundle.js`);
 });
-
-var io = require('socket.io')(server);
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-});
-
 
 app.get('/', (req, res) => {
   res.sendfile('index.html');
@@ -82,4 +72,13 @@ app.post('/webhook/', (req, res) => {
   }
 
   res.sendStatus(200);
+});
+
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
