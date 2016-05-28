@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import chalk from 'chalk';
 import socketIo from 'socket.io';
 
-import messenger from './messenger';
+import messenger from './lib/messenger';
 import { pageAccessToken } from './config';
 
 const HOST = 'localhost';
