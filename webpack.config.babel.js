@@ -1,6 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 
+import webpack from 'webpack';
+
 const sourcePath = path.resolve(__dirname, 'source');
 const buildPath = path.resolve(__dirname, 'build');
 
@@ -30,14 +32,16 @@ const sharedConfig = {
 const clientConfig = {
   ...sharedConfig,
 
-  entry: { client: 'client.js' },
+  entry: { client: ['client.js'] },
   target: 'web',
+
+  plugins: [],
 };
 
 const serverConfig = {
   ...sharedConfig,
 
-  entry: { server: 'server.js' },
+  entry: { server: ['server.js'] },
   target: 'node',
 
   node: {
@@ -48,9 +52,34 @@ const serverConfig = {
   // Don't bundle modules from node_modules
   // http://jlongster.com/Backend-Apps-with-Webpack--Part-I#Getting-Started
   externals: nodeModules,
+
+  plugins: [],
 };
 
-export default [
+if (process.env.NODE_ENV === 'development') {
+  clientConfig.entry.client.unshift(
+    'webpack-dev-server/client?http://localhost:3001/',
+    'webpack/hot/dev-server',
+  );
+
+  clientConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+  );
+
+  serverConfig.entry.server.unshift(
+    'webpack/hot/signal',
+  );
+
+  serverConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+  );
+}
+
+const config = [
   clientConfig,
   serverConfig,
 ];
+
+export default config;

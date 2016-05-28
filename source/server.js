@@ -4,11 +4,14 @@ import chalk from 'chalk';
 import socketIo from 'socket.io';
 
 import messenger from './messenger';
-import { appPort, pageAccessToken } from './config';
+import { pageAccessToken } from './config';
+
+const HOST = 'localhost';
+const PORT = 3000;
 
 const app = express();
-const server = app.listen(appPort, () => {
-  console.log(chalk.green.bold(`App is listening on port ${appPort}!`));
+const server = app.listen(PORT, HOST, () => {
+  console.log(chalk.green.bold(`server running at http://${HOST}:${PORT}/`));
 });
 const io = socketIo(server);
 
@@ -21,12 +24,14 @@ app.use(bodyParser.json());
 // static files
 app.use(express.static(`${__dirname}/../public/`));
 
-app.get('/client.bundle.js', (req, res) => {
-  res.sendfile(`${__dirname}/client.bundle.js`);
-});
+if (process.env.NODE_ENV === 'production') {
+  app.get('/client.bundle.js', (req, res) => {
+    res.sendFile(`${__dirname}/client.bundle.js`);
+  });
+}
 
 app.get('/', (req, res) => {
-  res.sendfile('index.html');
+  res.sendFile('index.html');
 });
 
 // webhook verification
@@ -63,7 +68,7 @@ app.post('/webhook/', (req, res) => {
           break;
         }
         default: {
-          const reply = `Text received, echo: ${text.substring(0, 200)}`;
+          const reply = `Echo: ${text.substring(0, 200)}`;
           messenger.sendTextMessage(pageAccessToken, senderId, reply);
           io.emit('new_message', { reply });
         }
@@ -73,7 +78,6 @@ app.post('/webhook/', (req, res) => {
 
   res.sendStatus(200);
 });
-
 
 io.on('connection', (socket) => {
   console.log('a user connected');

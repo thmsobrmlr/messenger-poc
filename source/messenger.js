@@ -82,7 +82,6 @@ export function sendReceiptTemplate(pageAccessToken, recipientId) {
     },
   };
 
-
   sendStructuredMessage(pageAccessToken, recipientId, template);
 }
 
