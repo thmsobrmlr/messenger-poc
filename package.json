@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "build/server.js",
   "scripts": {
-    "lint": "eslint source",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "eslint source",
+    "lint:css": "stylelint source/**/*.css",
     "dev": "concurrently 'npm run dev:server' 'npm run dev:webpack'",
     "dev:server": "NODE_ENV=development babel-watch source/server.js",
     "dev:webpack": "NODE_ENV=development babel-node scripts/webpack-server.js",
@@ -37,6 +39,8 @@
     "localtunnel": "^1.8.1",
     "postcss-loader": "^0.9.1",
     "style-loader": "^0.13.1",
+    "stylelint": "^6.5.1",
+    "stylelint-config-standard": "^8.0.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
