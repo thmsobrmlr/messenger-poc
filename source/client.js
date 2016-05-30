@@ -6,6 +6,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import update from 'react-addons-update';
 
+import styles from './styles.css';
+
 const socket = io('http://localhost:3000');
 
 class MessageList extends React.Component {
@@ -40,7 +42,9 @@ class MessageBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [],
+      messages: [
+        { id: 'fake_mid1', senderId: 'fakeSenderId', text: 'This is the first message' },
+      ],
     };
   }
 
@@ -76,10 +80,10 @@ class MessageBox extends React.Component {
 class Message extends React.Component {
   render() {
     return (
-      <div className="message">
-        <h2 className="messageAuthor">
+      <div className={styles.message}>
+        <span className="messageAuthor">
           {this.props.senderId}
-        </h2>
+        </span>
         {this.props.children}
       </div>
     );
