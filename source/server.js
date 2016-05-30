@@ -50,27 +50,28 @@ app.post('/webhook/', (req, res) => {
     const senderId = event.sender.id;
 
     if (event.message && event.message.text) {
-      const text = event.message.text;
-
       io.emit('new_message', { event });
 
-      switch (text) {
+      switch (event.message.text) {
         case 'image': {
-          messenger.sendImage(pageAccessToken, senderId, 'http://placekitten.com/200/300');
+          messenger.sendImage(pageAccessToken, senderId, 'http://placekitten.com/200/300')
+            .then((message) => { io.emit('new_message', { event: message }); });
           break;
         }
         case 'generic': {
-          messenger.sendGenericTemplate(pageAccessToken, senderId);
+          messenger.sendGenericTemplate(pageAccessToken, senderId)
+            .then((message) => { io.emit('new_message', { event: message }); });
           break;
         }
         case 'receipt': {
-          messenger.sendReceiptTemplate(pageAccessToken, senderId);
+          messenger.sendReceiptTemplate(pageAccessToken, senderId)
+            .then((message) => { io.emit('new_message', { event: message }); });
           break;
         }
         default: {
-          const reply = `Echo: ${text.substring(0, 200)}`;
-          messenger.sendTextMessage(pageAccessToken, senderId, reply);
-          io.emit('new_message', { reply });
+          const reply = `Echo: ${event.message.text.substring(0, 200)}`;
+          messenger.sendTextMessage(pageAccessToken, senderId, reply)
+            .then((message) => { io.emit('new_message', { event: message }); });
         }
       }
     }

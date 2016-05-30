@@ -46,19 +46,15 @@ class MessageBox extends React.Component {
 
   componentDidMount() {
     socket.on('new_message', message => {
-      console.log(message);
-
       if (message.event) {
         const newMessage = {
-          id: message.event.message.seq,
-          senderId: message.event.sender.id,
-          text: message.event.message.text,
+          id: message.event.message.mid,
+          senderId: 'asd',
+          text: message.event.message.text || message.event.message.attachment.type,
         };
 
         const newState = update(this.state, {
-          messages: {
-            $push: [newMessage],
-          },
+          messages: { $push: [newMessage] },
         });
 
         this.setState(newState);

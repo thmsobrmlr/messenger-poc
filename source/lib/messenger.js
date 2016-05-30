@@ -1,21 +1,36 @@
-import request from 'request';
+import request from 'request-promise';
+
+function FacebookApiException(message) {
+  this.message = message;
+  this.name = 'FacebookException';
+}
 
 function sendMessage(pageAccessToken, recipientId, data) {
-  request({
+  const payload = {
+    recipient: { id: recipientId },
+    message: data,
+  };
+
+  const options = {
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: pageAccessToken },
     method: 'POST',
-    json: {
-      recipient: { id: recipientId },
-      message: data,
-    },
-  }, (error, response) => {
-    if (error) {
+    body: payload,
+    json: true,
+  };
+
+  return request(options)
+    .then((body) => {
+      if (body.error) {
+        throw new FacebookApiException(body.error.error_data);
+      }
+
+      payload.message.mid = body.message_id;
+
+      return payload;
+    }).catch((error) => {
       console.log('Error sending messages: ', error);
-    } else if (response.body.error) {
-      console.log('Error: ', response.body.error);
-    }
-  });
+    });
 }
 
 function sendStructuredMessage(pageAccessToken, recipientId, template) {
@@ -26,7 +41,7 @@ function sendStructuredMessage(pageAccessToken, recipientId, template) {
     },
   };
 
-  sendMessage(pageAccessToken, recipientId, messageData);
+  return sendMessage(pageAccessToken, recipientId, messageData);
 }
 
 export function sendTextMessage(pageAccessToken, recipientId, text) {
@@ -34,7 +49,7 @@ export function sendTextMessage(pageAccessToken, recipientId, text) {
     text,
   };
 
-  sendMessage(pageAccessToken, recipientId, messageData);
+  return sendMessage(pageAccessToken, recipientId, messageData);
 }
 
 export function sendImage(pageAccessToken, recipientId, imageUrl) {
@@ -47,7 +62,7 @@ export function sendImage(pageAccessToken, recipientId, imageUrl) {
     },
   };
 
-  sendMessage(pageAccessToken, recipientId, messageData);
+  return sendMessage(pageAccessToken, recipientId, messageData);
 }
 
 export function sendGenericTemplate(pageAccessToken, recipientId) {
@@ -63,7 +78,7 @@ export function sendGenericTemplate(pageAccessToken, recipientId) {
     ],
   };
 
-  sendStructuredMessage(pageAccessToken, recipientId, template);
+  return sendStructuredMessage(pageAccessToken, recipientId, template);
 }
 
 export function sendReceiptTemplate(pageAccessToken, recipientId) {
@@ -82,7 +97,7 @@ export function sendReceiptTemplate(pageAccessToken, recipientId) {
     },
   };
 
-  sendStructuredMessage(pageAccessToken, recipientId, template);
+  return sendStructuredMessage(pageAccessToken, recipientId, template);
 }
 
 export default {
