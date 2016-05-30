@@ -4,6 +4,7 @@ import chalk from 'chalk';
 import socketIo from 'socket.io';
 
 import messenger from './lib/messenger';
+import transformMessage from './lib/message';
 import { pageAccessToken } from './config';
 
 const HOST = 'localhost';
@@ -50,28 +51,28 @@ app.post('/webhook/', (req, res) => {
     const senderId = event.sender.id;
 
     if (event.message && event.message.text) {
-      io.emit('new_message', { event });
+      io.emit('new_message', transformMessage(event));
 
       switch (event.message.text) {
         case 'image': {
           messenger.sendImage(pageAccessToken, senderId, 'http://placekitten.com/200/300')
-            .then((message) => { io.emit('new_message', { event: message }); });
+            .then((message) => { io.emit('new_message', transformMessage(message)); });
           break;
         }
         case 'generic': {
           messenger.sendGenericTemplate(pageAccessToken, senderId)
-            .then((message) => { io.emit('new_message', { event: message }); });
+            .then((message) => { io.emit('new_message', transformMessage(message)); });
           break;
         }
         case 'receipt': {
           messenger.sendReceiptTemplate(pageAccessToken, senderId)
-            .then((message) => { io.emit('new_message', { event: message }); });
+            .then((message) => { io.emit('new_message', transformMessage(message)); });
           break;
         }
         default: {
           const reply = `Echo: ${event.message.text.substring(0, 200)}`;
           messenger.sendTextMessage(pageAccessToken, senderId, reply)
-            .then((message) => { io.emit('new_message', { event: message }); });
+            .then((message) => { io.emit('new_message', transformMessage(message)); });
         }
       }
     }
