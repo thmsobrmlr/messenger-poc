@@ -12,7 +12,7 @@ class MessageListContainer extends React.Component {
 
     this.state = {
       messages: [
-        { id: 'fake_mid1', senderId: 'fakeSenderId', text: 'This is the first message' },
+        { id: 'fake_mid1', senderId: 'fakeSenderId', text: 'This is the first message', type: 'text' },
       ],
     };
   }
@@ -23,8 +23,15 @@ class MessageListContainer extends React.Component {
         const newMessage = {
           id: message.event.message.mid,
           senderId: 'asdf',
-          text: message.event.message.text || message.event.message.attachment.type,
         };
+
+        if (message.event.message.text) {
+          newMessage.text = message.event.message.text;
+          newMessage.type = 'text';
+        } else {
+          newMessage.type = message.event.message.attachment.type;
+          newMessage.attachment = message.event.message.attachment;
+        }
 
         this.setState(update(this.state, {
           messages: { $push: [newMessage] },

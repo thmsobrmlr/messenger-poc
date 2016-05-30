@@ -1,14 +1,21 @@
 import React from 'react';
 
-import Message from './Message';
+import TextMessage from './TextMessage';
+import ImageMessage from './ImageMessage';
+import TemplateMessage from './TemplateMessage';
 
 function MessageList(props) {
   const messageNodes = props.messages.map((message) => {
-    return (
-      <Message author={message.author} key={message.id}>
-        {message.text}
-      </Message>
-    );
+    let messageElem;
+
+    if (message.type == 'text') {
+      messageElem = <TextMessage key={message.id} author={message.author} key={message.id}>{message.text}</TextMessage>;
+    } else if (message.type == 'image') {
+      messageElem = <ImageMessage key={message.id} url={message.attachment.payload.url} />;
+    } else if (message.type == 'template') {
+      messageElem = <TemplateMessage key={message.id} />;
+    }
+    return messageElem;
   });
 
   return (

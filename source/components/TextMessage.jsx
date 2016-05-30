@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './Message.css';
 
-const Message = (props) =>
+const TextMessage = (props) =>
   <div className={styles.message}>
     <span className="messageAuthor">
       {props.senderId}
@@ -10,4 +10,4 @@ const Message = (props) =>
     {props.children}
   </div>;
 
-export default Message;
+export default TextMessage;
