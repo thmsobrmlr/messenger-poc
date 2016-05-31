@@ -1,15 +1,16 @@
+// TODO: Add props validation
 import React from 'react';
 
 import MessageBoxHeader from './MessageBoxHeader';
 import MessageForm from './MessageForm';
-import MessageListContainer from '../containers/MessageListContainer';
+import MessageList from '../components/MessageList';
 
 import styles from './MessageBox.css';
 
-const MessageBox = () =>
+const MessageBox = (props) =>
   <div className={styles.messageBox}>
     <MessageBoxHeader />
-    <MessageListContainer />
+    <MessageList messages={props.messages} />
     <MessageForm />
   </div>;
 

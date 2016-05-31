@@ -1,12 +1,12 @@
 import React from 'react';
 import update from 'react-addons-update';
 
-import MessageList from '../components/MessageList';
+import MessageBox from '../components/MessageBox';
 
 import io from 'socket.io-client';
 const socket = io('http://localhost:3000');
 
-class MessageListContainer extends React.Component {
+class MessageBoxContainer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -25,9 +25,9 @@ class MessageListContainer extends React.Component {
 
   render() {
     return (
-      <MessageList messages={this.state.messages} />
+      <MessageBox messages={this.state.messages} />
     );
   }
 }
 
-export default MessageListContainer;
+export default MessageBoxContainer;

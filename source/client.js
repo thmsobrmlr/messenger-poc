@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MessageBox from './components/MessageBox';
+import MessageBoxContainer from './containers/MessageBoxContainer';
 
 import './style.css';
 
 ReactDOM.render(
-  <MessageBox />,
+  <MessageBoxContainer />,
   document.getElementById('app')
 );

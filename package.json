@@ -9,6 +9,7 @@
     "dev": "concurrently 'npm run dev:server' 'npm run dev:webpack'",
     "dev:server": "NODE_ENV=development babel-watch source/server.js",
     "dev:webpack": "NODE_ENV=development babel-node scripts/webpack-server.js",
+    "storybook": "start-storybook -p 9001",
     "clean": "rm -rf build/ && mkdir build",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack",
@@ -19,6 +20,7 @@
   "author": "Thomas Obermüller",
   "license": "UNLICENSED",
   "devDependencies": {
+    "@kadira/storybook": "^1.28.1",
     "babel-cli": "^6.9.0",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
