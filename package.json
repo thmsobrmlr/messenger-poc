@@ -4,8 +4,8 @@
   "main": "build/server.js",
   "scripts": {
     "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "eslint source",
-    "lint:css": "stylelint **/*.css && exit 0",
+    "lint:js": "eslint source --ext js,jsx",
+    "lint:css": "stylelint **/*.css",
     "dev": "concurrently 'npm run dev:server' 'npm run dev:webpack'",
     "dev:server": "NODE_ENV=development babel-watch source/server.js",
     "dev:webpack": "NODE_ENV=development babel-node scripts/webpack-server.js",
