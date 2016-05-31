@@ -1,0 +1,13 @@
+.messageBoxHeader {
+  font-family: Arial;
+
+  padding: 28px 10px;
+
+  background-image: linear-gradient(to bottom right, #ff488c, #ff7126);
+}
+
+.headline {
+  text-align: center;
+
+  color: #fff;
+}

@@ -2,6 +2,7 @@
 import React from 'react';
 
 import Message from './Message';
+import styles from './MessageList.css';
 
 function MessageList(props) {
   const messageNodes = props.messages.map((message) => {
@@ -10,7 +11,7 @@ function MessageList(props) {
   });
 
   return (
-    <div className="messageList">
+    <div className={styles.messageList}>
       {messageNodes}
     </div>
   );
