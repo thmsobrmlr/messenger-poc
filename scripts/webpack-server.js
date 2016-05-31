@@ -18,8 +18,10 @@ new WebpackDevServer(webpack(webpackConfig), {
   quiet: true,
 }).listen(PORT, HOST, (error) => {
   if (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 });
 
+// eslint-disable-next-line no-console
 console.log(chalk.green.bold(`webpack-dev-server running at http://${HOST}:${PORT}/webpack-dev-server/`));

@@ -14,6 +14,12 @@ fs.readdirSync('node_modules')
     nodeModules[mod] = `commonjs ${mod}`;
   });
 
+const cssLoaders = [
+  'style-loader',
+  'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+  'postcss-loader',
+];
+
 const sharedConfig = {
   resolve: {
     root: sourcePath,
@@ -27,7 +33,7 @@ const sharedConfig = {
 
   module: {
     loaders: [
-      { test: /\.css$/, include: [sourcePath], loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' },
+      { test: /\.css$/, include: [sourcePath], loaders: cssLoaders },
       { test: /\.(js|jsx)$/, include: [sourcePath], loader: 'babel-loader' },
       { test: /\.json/, loader: 'json' },
     ],

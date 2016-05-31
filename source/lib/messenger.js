@@ -28,8 +28,6 @@ function sendMessage(pageAccessToken, recipientId, data) {
       payload.message.mid = body.message_id;
 
       return payload;
-    }).catch((error) => {
-      console.log('Error sending messages: ', error);
     });
 }
 

@@ -12,6 +12,7 @@ const PORT = 3000;
 
 const app = express();
 const server = app.listen(PORT, HOST, () => {
+  // eslint-disable-next-line no-console
   console.log(chalk.green.bold(`server running at http://${HOST}:${PORT}/`));
 });
 const io = socketIo(server);
@@ -79,12 +80,4 @@ app.post('/webhook/', (req, res) => {
   }
 
   res.sendStatus(200);
-});
-
-io.on('connection', (socket) => {
-  console.log('a user connected');
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
 });
