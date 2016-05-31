@@ -1,5 +1,4 @@
-// TODO: Props validation
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import TextMessage from './TextMessage';
 import ImageMessage from './ImageMessage';
@@ -17,6 +16,10 @@ const Message = (props) => {
   }
 
   return elem;
+};
+
+Message.propTypes = {
+  type: PropTypes.string.isRequired,
 };
 
 export default Message;

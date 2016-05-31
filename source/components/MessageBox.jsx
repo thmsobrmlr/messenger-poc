@@ -1,5 +1,4 @@
-// TODO: Add props validation
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import MessageBoxHeader from './MessageBoxHeader';
 import MessageForm from './MessageForm';
@@ -13,5 +12,9 @@ const MessageBox = (props) =>
     <MessageList messages={props.messages} />
     <MessageForm />
   </div>;
+
+MessageBox.propTypes = {
+  messages: PropTypes.array.isRequired,
+};
 
 export default MessageBox;

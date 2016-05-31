@@ -1,14 +1,12 @@
-// TODO: Add props validation
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Message from './Message';
 import styles from './MessageList.css';
 
 function MessageList(props) {
-  const messageNodes = props.messages.map((message) => {
-    console.log(message);
-    return <Message {...message} />;
-  });
+  const messageNodes = props.messages.map((message) =>
+    <Message {...message} />
+  );
 
   return (
     <div className={styles.messageList}>
@@ -16,5 +14,9 @@ function MessageList(props) {
     </div>
   );
 }
+
+MessageList.propTypes = {
+  messages: PropTypes.array.isRequired,
+};
 
 export default MessageList;

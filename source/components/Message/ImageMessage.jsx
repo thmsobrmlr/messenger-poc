@@ -1,5 +1,4 @@
-// TODO: Props validation
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import styles from './index.css';
 
@@ -8,6 +7,15 @@ const ImageMessage = (props) => {
   const className = `${styles.image} ${directionClass}`;
 
   return <img className={className} src={props.attachment.payload.url} role="presentation" />;
+};
+
+ImageMessage.propTypes = {
+  direction: PropTypes.string.isRequired,
+  attachment: PropTypes.shape({
+    payload: {
+      url: PropTypes.string.isRequired,
+    },
+  }),
 };
 
 export default ImageMessage;
