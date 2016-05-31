@@ -5,7 +5,7 @@ import socketIo from 'socket.io';
 
 import messenger from './lib/messenger';
 import transformMessage from './lib/message';
-import { pageAccessToken } from './config';
+import { pageAccessToken, verificationToken } from './config';
 
 const HOST = 'localhost';
 const PORT = 3000;
@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 
 // webhook verification
 app.get('/webhook/', (req, res) => {
-  if (req.query['hub.verify_token'] === 'this_is_my_token') {
+  if (req.query['hub.verify_token'] === verificationToken) {
     res.send(req.query['hub.challenge']);
   }
   res.send('Error, wrong token');
