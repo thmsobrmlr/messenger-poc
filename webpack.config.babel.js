@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 
 import webpack from 'webpack';
+import cssnext from 'postcss-cssnext';
 
 const sourcePath = path.resolve(__dirname, 'source');
 const buildPath = path.resolve(__dirname, 'build');
@@ -40,6 +41,8 @@ const clientConfig = {
   target: 'web',
 
   plugins: [],
+
+  postcss: [cssnext({ browsers: ['last 2 versions'] })],
 };
 
 const serverConfig = {
