@@ -7,6 +7,7 @@ import AppLayout from './pages/AppLayout';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
+import LoginPage from './pages/LoginPage';
 import MessagesPage from './pages/MessagesPage';
 
 import './style.css';
@@ -15,6 +16,7 @@ ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={AppLayout}>
       <IndexRoute component={HomePage} />
+      <Route path="/login" component={LoginPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/messages" component={MessagesPage} />
     </Route>
