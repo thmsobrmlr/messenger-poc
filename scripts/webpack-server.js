@@ -11,7 +11,6 @@ new WebpackDevServer(webpack(webpackConfig), {
   proxy: {
     '*': `http://${HOST}:${PORT - 1}`,
   },
-  contentBase: './public',
   hot: true,
   debug: true,
   stats: { colors: true },
