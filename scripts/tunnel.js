@@ -12,11 +12,11 @@ if (subdomain) {
 
 localtunnel(port, opts, (err, tunnel) => {
   if (err) {
-    console.log(chalk.red.bold(err));
+    console.log(chalk.red.bold(err)); // eslint-disable-line no-console
   } else {
     const sourceUrl = chalk.green.bold(tunnel.url);
     const destUrl = chalk.green.bold(`http://localhost:${port}`);
 
-    console.log(`Tunnel open from ${sourceUrl} to ${destUrl}.`);
+    console.log(`Tunnel open from ${sourceUrl} to ${destUrl}.`); // eslint-disable-line no-console
   }
 });

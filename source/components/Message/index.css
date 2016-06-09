@@ -1,0 +1,32 @@
+.message {
+  font-size: 13px;
+  font-weight: 600;
+
+  position: relative;
+
+  display: inline-block;
+  clear: both;
+
+  margin-bottom: 15px;
+  padding: 12px 13px;
+
+  color: #3d3d60;
+  border-radius: 5px 5px 5px 0;
+}
+
+.image {
+  clear: both;
+}
+
+.outgoing {
+  float: right;
+
+  border-radius: 5px 5px 0;
+  background-color: #e9e9f3;
+}
+
+.incoming {
+  float: left;
+
+  border: 2px solid #e9e9f3;
+}
